@@ -1,0 +1,57 @@
+---
+title: "Review_BasicR1"
+author: "Jinhee Jaiden Han"
+date: '2021 2 2 '
+output: html_document
+---
+# This is a kind of remider for me that I learned so far before the new course begins.
+
+```{r setup}
+library(tidyverse)
+```
+
+### What was the first I learned? At first, Be careful typos of variables. It seems like small but commonly makes a mistake and the code will not run.
+
+### Basic R markdwon grammar
+> A footnote^[this is a footnote]
+>
+> A horizontal rule<hr />
+>
+> A block quote<blockquote>This is a block quote.</blockquote>
+
+
+### Using 'filter()' and 'select()' fucntions
+
+```{r}
+mpg #call the data frame
+```
+
+### New data frame
+* chevrolet's suv and midsize models in 2008
+* manufacturer, model, trans, class, cty
+
+```{r}
+chevy_mpg <- mpg %>% 
+  filter(manufacturer == "chevrolet",
+         class %in% c("suv", "midsize"),
+         year == "2008") %>% 
+  select(manufacturer, model, trans, class, cty)
+
+chevy_mpg
+```
+
+### Plotting
+
+```{r}
+ggplot(data = chevy_mpg) +
+  geom_point(mapping = aes(x = class, y = cty))
+```
+
+### Summarizing
+
+```{r}
+chevy_mpg %>% 
+  group_by(class) %>% 
+  summarize(cty_mean = mean(cty)) 
+```
+
