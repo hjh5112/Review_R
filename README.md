@@ -1,2 +1,2 @@
-# Review_R1
+# Review_R
 Review what I learned in R
