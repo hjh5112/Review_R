@@ -1,0 +1,119 @@
+---
+title: "Review2"
+author: "Jinhee Jaiden Han"
+date: '2021 2 3 '
+output: html_document
+---
+```{r setup}
+library(tidyverse)
+library(bcdata)
+```
+
+# Data Anaylising using bcdata library
+
+### COVID-19 in BC
+
+```{r}
+bcdc_search("COVID-19")
+```
+
+## Importing CASE data
+
+```{r}
+COVID19_Case <- bcdc_get_data("932a6361-7616-48ac-a412-226453c273f8")
+COVID19_Case
+```
+
+### Sperating datas by Health Area
+
+```{r}
+OoC <- COVID19_Case %>% 
+  filter(HA == "Out of Canada")
+OoC
+
+VC <- COVID19_Case %>% 
+  filter(HA == "Vancouver Coastal")
+VC
+
+Fr <- COVID19_Case %>% 
+  filter(HA == "Fraser")
+Fr
+
+Nt <- COVID19_Case %>% 
+  filter(HA == "Northern")
+Nt
+
+It <- COVID19_Case %>% 
+  filter(HA == "Interior")
+It
+
+VI <- COVID19_Case %>% 
+  filter(HA == "Vancouver Island")
+VI
+```
+
+
+
+
+
+### Total number comparison By Health Area
+
+```{r}
+COVID19_Case %>%
+  group_by(HA) %>% 
+  summarise(Totnum = nrow(COVID19_Case[COVID19_Case$HA == HA, ])) %>% 
+  ggplot(aes(x = HA,
+             y = Totnum,
+             colour = HA)) +
+  geom_point()
+  
+```
+
+### Vancouver Island cases by date
+
+```{r}
+VI %>%
+  group_by(Reported_Date) %>% 
+  summarise(number = nrow(VI[VI$Reported_Date == Reported_Date, ])) %>% 
+  ggplot(aes(x = Reported_Date,
+             y = number)) +
+  geom_point()
+```
+
+
+
+### Male VS Female in Vancouver Island
+
+```{r}
+VI %>%
+  group_by(Sex) %>% 
+  summarise(value = nrow(VI[VI$Sex == Sex, ])) %>% 
+  ggplot(aes(x = Sex,
+             y = value,
+             colour = Sex)) +
+  geom_point()
+  
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
